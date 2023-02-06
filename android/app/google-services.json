@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "734876943645",
+    "project_id": "user-registration-cbbbb",
+    "storage_bucket": "user-registration-cbbbb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:734876943645:android:87b2d2db86afb2e9488df4",
+        "android_client_info": {
+          "package_name": "com.example.user_registration"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "734876943645-6qjfi0t6to27kkc4ks6s04jam8igr25a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcMpNmq_TIBS9a2F05ED1CARxtgzH3blE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "734876943645-6qjfi0t6to27kkc4ks6s04jam8igr25a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
