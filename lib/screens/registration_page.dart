@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:user_registration/components/my_button.dart';
@@ -25,6 +26,7 @@ class _RegisterState extends State<Register> {
 
   static String selectedValue = "Student";
   String imgUrl = "";
+  PlatformFile? pickedFile;
 
   // reading the message with the help of the data got from the server
   // Stream<List<User>> readMessage() => FirebaseFirestore.instance
@@ -209,13 +211,13 @@ class _RegisterState extends State<Register> {
                       onPressed: () async {
                         ImagePicker imagePicker = ImagePicker();
                         XFile? file = await imagePicker.pickImage(
-                            source: ImageSource.camera);
+                            source: ImageSource.gallery);
                         print('${file?.path}');
 
-                         if (file == null) return;
-                    //Import dart:core
-                    String uniqueFileName =
-                        DateTime.now().millisecondsSinceEpoch.toString();
+                        if (file == null) return;
+                        //Import dart:core
+                        String uniqueFileName =
+                            DateTime.now().millisecondsSinceEpoch.toString();
 
                         //step 2 : upload the image to firebase storage
                         Reference referenceRoot =
@@ -228,14 +230,50 @@ class _RegisterState extends State<Register> {
                             referenceDirImages.child(uniqueFileName);
 
                         //Handle errors/success
-                    try {
-                      //Store the file
-                      await referenceImageToUpload.putFile(File(file.path));
-                      //Success: get the download URL
-                      imgUrl = await referenceImageToUpload.getDownloadURL();
-                    } catch (error) {
-                      //Some error occurred
-                    }
+                        try {
+                          //Store the file
+                          await referenceImageToUpload.putFile(File(file.path));
+                          //Success: get the download URL
+                          imgUrl =
+                              await referenceImageToUpload.getDownloadURL();
+                        } catch (error) {
+                          //Some error occurred
+                        }
+                      },
+                      icon: const Icon(Icons.file_upload_outlined))
+                ],
+              ),
+
+              //file upload resume
+              Row(
+                children: [
+                  Text(
+                    "Upload your Resume : ",
+                    style: TextStyle(
+                      color: Colors.grey[700],
+                      fontSize: 16,
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () async {
+                        final result = await FilePicker.platform.pickFiles(
+                          type: FileType.custom,
+                          allowedExtensions: ['pdf'],
+                        );
+                        if (result == null) return;
+                        setState(() {
+                          pickedFile = result.files.first;
+                        });
+
+                        final path = 'resume/${pickedFile!.name}';
+                        final file = File(pickedFile!.path!);
+
+                        final ref = FirebaseStorage.instance.ref().child(path);
+                        ref.putFile(file); 
+
+                        
+                        // final url = await ref.getDownloadURL();
+                        // print(url);
                       },
                       icon: const Icon(Icons.file_upload_outlined))
                 ],
@@ -247,8 +285,8 @@ class _RegisterState extends State<Register> {
               MyButton(
                   onTap: () {
                     if (imgUrl.isEmpty) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text('Please upload an image')));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Please upload an image')));
 
                       return;
                     }
