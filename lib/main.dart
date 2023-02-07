@@ -3,6 +3,7 @@ import 'package:user_registration/screens/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:user_registration/screens/registration_page.dart';
 import 'package:user_registration/screens/signup_page.dart';
+import 'package:user_registration/services/auth_service.dart';
 import 'firebase_options.dart';
 
 Future main() async {
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home:Login(),
-      home: Register(),
+      home: AuthService().handleAuthState(),
        routes: {
           '/signIn': (context) => Login(),
           '/signUp': (context) => SignUp(),

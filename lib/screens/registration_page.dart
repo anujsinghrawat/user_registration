@@ -1,4 +1,7 @@
 import 'dart:io';
+import 'package:email_validator/email_validator.dart';
+import 'package:user_registration/services/auth_service.dart';
+import 'package:validation_textformfield/validation_textformfield.dart';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -51,6 +54,19 @@ class _RegisterState extends State<Register> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
+              SizedBox(
+                height: 25,
+              ),
+              Text(
+                "Enter your details",
+                style: TextStyle(
+                  color: Colors.grey[700],
+                  fontSize: 30,
+                ),
+              ),
+              SizedBox(
+                height: 25,
+              ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 50),
                 child: DropdownButtonFormField(
@@ -73,6 +89,9 @@ class _RegisterState extends State<Register> {
                     },
                     items: dropdownItems),
               ),
+              SizedBox(
+                height: 25,
+              ),
               Row(
                 children: [
                   // name field
@@ -85,12 +104,21 @@ class _RegisterState extends State<Register> {
                   ),
                   Expanded(
                     child: MyTextField(
+                      validate: (value) {
+                        // add custom validation here.
+                        if (value.isEmpty) {
+                          return 'Please enter some value';
+                        }
+                      },
                       controller: nameController,
                       hintText: 'Name',
                       obscureText: false,
                     ),
                   ),
                 ],
+              ),
+              SizedBox(
+                height:20
               ),
 
               // email field
@@ -108,11 +136,16 @@ class _RegisterState extends State<Register> {
                       controller: emailController,
                       hintText: 'Email',
                       obscureText: false,
+                      validate: (value) => EmailValidator.validate(value!)
+                          ? null
+                          : "Please enter a valid email",
                     ),
                   ),
                 ],
               ),
-
+              SizedBox(
+                height:20
+              ),
               // password field
               Row(
                 children: [
@@ -125,6 +158,15 @@ class _RegisterState extends State<Register> {
                   ),
                   Expanded(
                     child: MyTextField(
+                      validate: (value) {
+                        // add custom validation here.
+                        if (value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        if (value.length < 3) {
+                          return 'Must be more than 2 charater';
+                        }
+                      },
                       keyboardType: TextInputType.visiblePassword,
                       controller: passwordController,
                       hintText: 'Password',
@@ -133,7 +175,9 @@ class _RegisterState extends State<Register> {
                   ),
                 ],
               ),
-
+              SizedBox(
+                height:20
+              ),
               //phone number field
               Row(
                 children: [
@@ -154,6 +198,9 @@ class _RegisterState extends State<Register> {
                   ),
                 ],
               ),
+              SizedBox(
+                height:20
+              ),
 
               //college name field
               Row(
@@ -167,12 +214,21 @@ class _RegisterState extends State<Register> {
                   ),
                   Expanded(
                     child: MyTextField(
+                      validate: (value) {
+                        // add custom validation here.
+                        if (value.isEmpty) {
+                          return 'Please enter some value';
+                        }
+                      },
                       controller: collegeController,
                       hintText: 'College ',
                       obscureText: false,
                     ),
                   ),
                 ],
+              ),
+              SizedBox(
+                height:20
               ),
 
               //if student then admission year else means Alumini then passout year
@@ -190,6 +246,12 @@ class _RegisterState extends State<Register> {
                     ),
                     Expanded(
                       child: MyTextField(
+                        validate: (value) {
+                          // add custom validation here.
+                          if (value.isEmpty) {
+                            return 'Please enter some value';
+                          }
+                        },
                         keyboardType: TextInputType.number,
                         controller: yearController,
                         hintText: 'Year ',
@@ -198,6 +260,9 @@ class _RegisterState extends State<Register> {
                     ),
                   ],
                 ),
+                SizedBox(
+                height:20
+              ),
               Row(
                 children: [
                   Text(
@@ -243,6 +308,9 @@ class _RegisterState extends State<Register> {
                       icon: const Icon(Icons.file_upload_outlined))
                 ],
               ),
+              SizedBox(
+                height:20
+              ),
 
               //file upload resume
               Row(
@@ -269,9 +337,8 @@ class _RegisterState extends State<Register> {
                         final file = File(pickedFile!.path!);
 
                         final ref = FirebaseStorage.instance.ref().child(path);
-                        ref.putFile(file); 
+                        ref.putFile(file);
 
-                        
                         // final url = await ref.getDownloadURL();
                         // print(url);
                       },
@@ -302,16 +369,26 @@ class _RegisterState extends State<Register> {
                     );
                     createUser(user);
                     setState(() {
-                      nameController.text = '';
-                      emailController.text = '';
-                      passwordController.text = '';
-                      collegeController.text = '';
-                      phoneController.text = '';
-                      yearController.text = '';
-                      passwordController.text = '';
+                      // nameController.text = '';
+                      // emailController.text = '';
+                      // passwordController.text = '';
+                      // collegeController.text = '';
+                      // phoneController.text = '';
+                      // yearController.text = '';
+                      // passwordController.text = '';
+                      Navigator.pushReplacementNamed(context, '/register');
                     });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Form has been submitted')));
                   },
-                  text: "Submit")
+                  text: "Submit"),
+              const SizedBox(height: 20),
+              MyButton(
+                  onTap: () {
+                    AuthService().signOut();
+                    Navigator.pushReplacementNamed(context, '/signIn');
+                  },
+                  text: "SignOut"),
             ],
           ),
         ),

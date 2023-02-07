@@ -2,6 +2,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:user_registration/components/my_button.dart';
+import 'package:user_registration/components/my_textfield.dart';
 import 'package:user_registration/services/auth_service.dart';
 
 class Login extends StatefulWidget {
@@ -93,7 +95,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 29, 29, 29),
+      // backgroundColor: const Color.fromARGB(255, 29, 29, 29),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Center(
@@ -123,43 +125,18 @@ class _LoginState extends State<Login> {
                 const SizedBox(height: 50),
 
                 //
-                TextField(
+                MyTextField(
                   controller: emailController,
-                  decoration: InputDecoration(
-                      prefixIcon: Align(
-                          widthFactor: 1.0,
-                          heightFactor: 1.0,
-                          child: FaIcon(FontAwesomeIcons.envelope)),
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey.shade400),
-                      ),
-                      fillColor: const Color.fromARGB(255, 53, 53, 53),
-                      filled: true,
-                      hintText: 'Enter your email',
-                      hintStyle: TextStyle(color: Colors.grey[500])),
+                  hintText: "Enter your email",
+                  obscureText: false,
                 ),
                 const SizedBox(height: 25),
 
-                //
-                TextField(
+                // password
+                MyTextField(
                   obscureText: true,
-                  autocorrect: false,
+                  hintText: "Enter your password",
                   controller: passwordController,
-                  decoration: InputDecoration(
-                      prefixIcon: Align(
-                          widthFactor: 1.0,
-                          heightFactor: 1.0,
-                          child: FaIcon(FontAwesomeIcons.user)),
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      fillColor: const Color.fromARGB(255, 53, 53, 53),
-                      filled: true,
-                      hintText: 'Enter your password',
-                      hintStyle: TextStyle(color: Colors.grey[500])),
                 ),
 
                 const SizedBox(height: 10),
@@ -180,34 +157,12 @@ class _LoginState extends State<Login> {
 
                 //signin button
                 const SizedBox(height: 25),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.amber,
-                      foregroundColor: Color.fromARGB(255, 83, 83, 83),
-                      minimumSize: const Size(350, 50),
-                      textStyle: const TextStyle(fontSize: 22),
-                    ),
-                    onPressed: signUserIn,
-                    child: const Text("SignIn")),
+                MyButton(
+                  text: "SignIn",
+                  onTap: signUserIn,
+                ),
 
-                //Signin with Google account
-                // const SizedBox(height: 25),
-                // ElevatedButton.icon(
-                //   // icon: const Icon(Icons.login),
-                //   icon: const FaIcon(FontAwesomeIcons.google),
-                //   label: const Text("SignIn with Google account"),
-                //   style: ElevatedButton.styleFrom(
-                //     backgroundColor: Colors.amber,
-                //     foregroundColor: Color.fromARGB(255, 83, 83, 83),
-                //     minimumSize: const Size(300, 50),
-                //     textStyle: const TextStyle(fontSize: 22),
-                //   ),
-                //   onPressed: () {
-                //     // AuthService().signInWithGoogle();
-                //     AuthService().handleAuthState();
-                //     // print('auth.google.com');
-                //   },
-                // ),
+                
                 const SizedBox(height: 50),
 
                 //not a member , Register
@@ -219,15 +174,10 @@ class _LoginState extends State<Login> {
                       style: TextStyle(color: Colors.grey[700]),
                     ),
                     const SizedBox(width: 4),
-                    TextButton(
-                        onPressed: register,
-                        child: const Text(
-                          'register now',
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ))
+                    MyButton(
+                        onTap: register,
+                        text: 'Register',
+                        ),
                   ],
                 )
               ],

@@ -3,6 +3,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:user_registration/components/my_button.dart';
+import 'package:user_registration/components/my_textfield.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -96,7 +98,6 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 29, 29, 29),
       body: SingleChildScrollView(
         child: SafeArea(
           child: Center(
@@ -128,23 +129,10 @@ class _SignUpState extends State<SignUp> {
                 //
                 SizedBox(
                   width: 400,
-                  child: TextField(
+                  child: MyTextField(
                     controller: nameController,
-                    decoration: InputDecoration(
-                        prefixIcon: Align(
-                            widthFactor: 1.0,
-                            heightFactor: 1.0,
-                            child: FaIcon(FontAwesomeIcons.user)),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade400),
-                        ),
-                        fillColor: const Color.fromARGB(255, 53, 53, 53),
-                        filled: true,
-                        hintText: 'Enter your name here',
-                        hintStyle: TextStyle(color: Colors.grey[500])),
+                    hintText: 'Enter your name',
+                    obscureText: false,
                   ),
                 ),
                 const SizedBox(height: 25),
@@ -152,23 +140,10 @@ class _SignUpState extends State<SignUp> {
                 //
                 SizedBox(
                   width: 400,
-                  child: TextField(
+                  child: MyTextField(
                     controller: emailController,
-                    decoration: InputDecoration(
-                        prefixIcon: Align(
-                            widthFactor: 1.0,
-                            heightFactor: 1.0,
-                            child: FaIcon(FontAwesomeIcons.envelope)),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade400),
-                        ),
-                        fillColor: const Color.fromARGB(255, 53, 53, 53),
-                        filled: true,
-                        hintText: 'Enter your email',
-                        hintStyle: TextStyle(color: Colors.grey[500])),
+                    hintText: 'Enter your email',
+                    obscureText: false,
                   ),
                 ),
                 const SizedBox(height: 25),
@@ -176,28 +151,10 @@ class _SignUpState extends State<SignUp> {
                 //
                 SizedBox(
                   width: 400,
-                  child: TextField(
+                  child: MyTextField(
                     controller: passwordController,
                     obscureText: true,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                      prefixIcon: Align(
-                          widthFactor: 1.0,
-                          heightFactor: 1.0,
-                          child: FaIcon(FontAwesomeIcons.lock)),
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey.shade400),
-                      ),
-                      fillColor: const Color.fromARGB(255, 53, 53, 53),
-                      filled: true,
-                      hintText: 'Enter your password',
-                      hintStyle: TextStyle(
-                        color: Colors.grey[500],
-                      ),
-                    ),
+                    hintText: 'Enter your password',
                   ),
                 ),
 
@@ -205,18 +162,10 @@ class _SignUpState extends State<SignUp> {
 
                 //signup button
                 const SizedBox(height: 25),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.amber,
-                      foregroundColor: Color.fromARGB(255, 83, 83, 83),
-                      minimumSize: const Size(300, 50),
-                      textStyle: const TextStyle(fontSize: 22),
-                    ),
-                    onPressed: signUserUp,
-                    child: const Text(
-                      "Register",
-                      textScaleFactor: 1,
-                    )),
+                MyButton(
+                    text: "Sign Up",
+                    onTap: signUserUp,
+                ),
                 const SizedBox(height: 50),
               ],
             ),

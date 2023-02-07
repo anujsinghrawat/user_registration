@@ -31,6 +31,7 @@ environment:
 dependencies:
   cloud_firestore: ^4.3.1
   cupertino_icons: ^1.0.2
+  email_validator: ^2.1.17
   file_picker: ^5.2.5
   firebase_auth: ^4.2.5
   firebase_core: ^2.4.1
@@ -40,6 +41,7 @@ dependencies:
   flutter_native_splash: ^2.2.17
   font_awesome_flutter: ^10.3.0
   image_picker: ^0.8.6+1
+  validation_textformfield: ^2.2.5
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -49,7 +51,6 @@ dev_dependencies:
 flutter_native_splash:
   color: "#f7f6f1"
   image: assets/logo.png
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
